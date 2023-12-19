@@ -168,8 +168,11 @@ class Resize(object):
 
         return (new_width, new_height)
 
-    def __call__(self, x):
+    def __call__(self, x):           
         width, height = self.get_size(*x.shape[-2:][::-1])
+        if (torch. __version__) == "2.1.0+cu121":
+            width = width.item()
+            height = height.item()
         return nn.functional.interpolate(x, (height, width), mode='bilinear', align_corners=True)
 
 class PrepForMidas(object):
